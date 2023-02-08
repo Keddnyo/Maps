@@ -1,6 +1,9 @@
 # Карты
 Легковесная альтернатива приложению Яндекс.Карты
 
+<a href="https://github.com/Keddnyo/Maps/releases"><img src="https://img.shields.io/github/downloads/keddnyo/maps/total?style=for-the-badge"></a>
+<a href="https://github.com/Keddnyo/Maps/releases/latest"><img src="https://img.shields.io/github/downloads/keddnyo/maps/latest/total?label=Latest%20downloads&style=for-the-badge"></a>
+
 ## Особенности
 1. Android 4.1+
 2. Малый размер приложения
