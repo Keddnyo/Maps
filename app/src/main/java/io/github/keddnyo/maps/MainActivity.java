@@ -1,15 +1,14 @@
 package io.github.keddnyo.maps;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     WebView webView;
 
@@ -25,23 +24,24 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebViewClient(client);
 
         WebSettings settings = webView.getSettings();
+        settings.setDomStorageEnabled(true);
         settings.setJavaScriptEnabled(true);
 
         Uri data = getIntent().getData();
 
         if (data != null) {
-            String inputData = data.getSchemeSpecificPart();
-            String geoReplace;
+            if (data.getScheme().equals("geo")) {
+                String geo = data.getSchemeSpecificPart();
 
-            if (inputData.contains("?")) {
-                geoReplace = inputData.substring(inputData.indexOf(":") + 1, inputData.indexOf("?") - 1);
+                if (geo.contains("?q=")) {
+                    geo = geo.substring(geo.indexOf("?q=") + 3);
+                }
+
+                webView.loadUrl("https://yandex.ru/maps?text=" + geo);
             } else {
-                geoReplace = inputData.substring(inputData.indexOf(":") + 1);
+                webView.loadUrl(data.toString());
             }
 
-            String geo = geoReplace.replace("%2C", ",");
-
-            webView.loadUrl("https://yandex.ru/maps?text=" + geo);
         } else {
             webView.loadUrl("https://maps.ya.ru");
         }
