@@ -3,10 +3,13 @@ package io.github.keddnyo.maps;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import io.github.keddnyo.maps.common.Constants;
 
 public class MainActivity extends Activity {
 
@@ -27,6 +30,10 @@ public class MainActivity extends Activity {
         settings.setDomStorageEnabled(true);
         settings.setJavaScriptEnabled(true);
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            settings.setUserAgentString(Constants.USER_AGENT);
+        }
+
         Uri data = getIntent().getData();
 
         if (data != null) {
@@ -37,13 +44,13 @@ public class MainActivity extends Activity {
                     geo = geo.substring(geo.indexOf("?q=") + 3);
                 }
 
-                webView.loadUrl("https://yandex.ru/maps?text=" + geo);
+                webView.loadUrl(Constants.YANDEX_MAPS_TEMPLATE_URL + geo);
             } else {
                 webView.loadUrl(data.toString());
             }
 
         } else {
-            webView.loadUrl("https://maps.ya.ru");
+            webView.loadUrl(Constants.YANDEX_MAPS_URL);
         }
     }
 
